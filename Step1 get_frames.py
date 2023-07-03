@@ -1,5 +1,6 @@
 import os
 import cv2
+import re
 
 def extract_frames_from_videos(video_dir):
     # 获取视频目录下所有文件夹（摄像头）
@@ -19,7 +20,7 @@ def extract_frames_from_videos(video_dir):
         os.makedirs(output_dir, exist_ok=True)
 
         # 遍历视频文件
-        for video_file in sorted(video_files)[:5]:  # 仅处理前5个视频
+        for video_file in sorted(video_files): #[:5]:  # 仅处理前5个视频
             video_path = os.path.join(camera_dir, video_file)
 
             # 打开视频文件
@@ -45,7 +46,8 @@ def extract_frames_from_videos(video_dir):
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
             # 获取视频的结束时间戳（秒）
-            video_end_time = int(video_file.split("_")[-2])
+            #video_end_time = int(video_file.split("_")[-2])
+            video_end_time = int(re.split(r"[_\.]", video_file)[-2])
             print(f"视频文件: {video_path}，结束时间戳: {video_end_time}")
 
             # 获取第一帧的时间戳
@@ -84,5 +86,5 @@ def extract_frames_from_videos(video_dir):
             cap.release()
 
 
-video_dir = "./Videos0065/"
+video_dir = "./Videos/"
 extract_frames_from_videos(video_dir)
