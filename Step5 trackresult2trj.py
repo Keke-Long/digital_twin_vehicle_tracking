@@ -12,35 +12,26 @@ track_result = "./Yolo_result/"  # 文件夹的路径
 cameras = [folder for folder in os.listdir(track_result) if os.path.isdir(os.path.join(track_result, folder))]
 
 # for camera in sorted(cameras):
-for camera in ['0001','0002','0003']:
-    camera_dir = os.path.join(track_result, camera)
-    videos = [folder for folder in os.listdir(camera_dir) if os.path.isdir(os.path.join(camera_dir, folder))]
+for camera in ['0003']: #,'0002','0003'
+    path = os.path.join(track_result, camera, camera, "labels/")
+    print("path", path)
 
-    data_list = []
     data = pd.DataFrame()
 
-    for video in videos:
-        path = os.path.join(camera_dir,video,"labels/")
-        #print("path",path)
+    frame_count = len([f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))])
 
-        frame_count = len([f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))])
+    file_list = os.listdir(path)
+    for file in tqdm(file_list):
+        #print('file', file)
 
-        file_list = os.listdir(path)
+        d = pd.read_table(path + file, sep='\s', names=['class', 'x_pix', 'y_pix', 'w_pix', 'h_pix', 'id'])
 
-        for file in tqdm(file_list):
-            #print('file',file)
-            segments = re.split(r"[._]", file)
-            print(segments)
-            video_end_time = int(segments[2])
-            frame_num = int(segments[3])
-
-            d = pd.read_table(path + file, sep='\s', names=['class', 'x_pix', 'y_pix', 'w_pix', 'h_pix', 'id'])
-            #frame_time = video_end_time - (frame_count-frame_num)*(1/frames)
-            frame_time = video_end_time + frame_num * (1 / frames)
-            d.insert(2, 'time', frame_time)
-            d.insert(3, 'video_end_time', video_end_time)
-            d.insert(4, 'frame_num', frame_num)
-            data = pd.concat([data, d])
+        segments = re.split(r"[._]", file)
+        frame_num = int(segments[1])
+        frame_time = frame_num * (1 / frames)
+        d.insert(3, 'frame_num', frame_num)
+        d.insert(2, 'time', frame_time)
+        data = pd.concat([data, d])
 
     w = 352
     h = 240
@@ -56,4 +47,4 @@ for camera in ['0001','0002','0003']:
     data.time = data.time.round(2)
 
     output_dir = "./Trajectory/" + camera + ".csv"
-    data.to_csv(path_or_buf=output_dir, columns=['id', 'time', 'video_end_time', 'frame_num', 'x_pix', 'y_pix', 'w_pix', 'h_pix'], index=False)
+    data.to_csv(path_or_buf=output_dir, columns=['id', 'time', 'frame_num', 'x_pix', 'y_pix', 'w_pix', 'h_pix'], index=False)
