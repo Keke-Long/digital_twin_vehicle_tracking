@@ -1,13 +1,14 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-camera_num = '0001'
+camera_num = '0003'
 # 读取CSV文件并解析时间列
 data = pd.read_csv(f'Trajectory/{camera_num}.csv', parse_dates=['time'])
 data = data.dropna(subset=['id'])
 
 # 按照id和时间排序数据
 data = data.sort_values(by=['id', 'time'])
+data.to_csv(f'Trajectory/{camera_num}.csv', index=False)
 
 # 按照id分组
 groups = data.groupby('id')
@@ -21,6 +22,8 @@ for group_name, group_data in groups:
     ax1.axis('equal')
 plt.savefig(f'Trajectory/{camera_num}.png')
 plt.show()
+
+
 
 
 
