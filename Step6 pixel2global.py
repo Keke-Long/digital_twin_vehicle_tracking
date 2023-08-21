@@ -5,6 +5,7 @@ import pandas as pd
 import re
 from tqdm import tqdm
 
+
 #%% Video 1
 # 经纬度坐标 #维度，经度
 Video0001_GPS_info = np.float32([
@@ -77,10 +78,10 @@ def GPS2UTM(GPS_info):
 def cvt_pos(u , v, mat):
     x = (mat[0][0]*u+mat[0][1]*v+mat[0][2])/(mat[2][0]*u+mat[2][1]*v+mat[2][2])
     y = (mat[1][0]*u+mat[1][1]*v+mat[1][2])/(mat[2][0]*u+mat[2][1]*v+mat[2][2])
-    return (round(x,2) - 300000, round(y,2) - 4770000)
+    return (round(x,2), round(y,2))
 
 
-Video_num = "0002"
+Video_num = "0003"
 
 utmPts1 = GPS2UTM(globals()["Video" + Video_num + "_GPS_info"])
 imgPts1 = np.array([globals()["Video" + Video_num + "_imgPts"]])
@@ -124,19 +125,17 @@ with open(f"camera_parameter_{Video_num}.txt", "w") as file:
     file.write(f"Rotation angles (Degrees) for X, Y, Z: {eulerAngles_deg} \n")
 
 
-# # Pixel coordinate to World coordinate 第一个参数是转化前坐标，第二个参数是转化后坐标
-# hom1, _ = cv.findHomography(imgPts1, utmPts1, cv.RANSAC, 5)
-#
-# file_dir = "./Trajectory/" + Video_num + ".csv"
-# d = pd.read_csv(file_dir)
-# d = d.loc[:, ~d.columns.str.contains('^Unnamed')]
-# d["x_utm"] = np.nan
-# d["y_utm"] = np.nan
-#
-# with tqdm(total=len(d)) as pbar:
-#     for i, row in d.iterrows():
-#         d.at[i, 'x_utm'], d.at[i, 'y_utm'] = cvt_pos(getattr(row, 'x_pix'), getattr(row, 'y_pix'), hom1)  # pixel to utm
-#
-# d.x_utm = d.x_utm.round(3)
-# d.y_utm = d.y_utm.round(3)
-# d.to_csv(path_or_buf = file_dir, index=False)
+# Pixel coordinate to World coordinate 第一个参数是转化前坐标，第二个参数是转化后坐标
+hom1, _ = cv.findHomography(imgPts1, utmPts1, cv.RANSAC, 5)
+
+file_dir = "./Trajectory/" + Video_num + ".csv"
+d = pd.read_csv(file_dir)
+d = d.loc[:, ~d.columns.str.contains('^Unnamed')]
+d["x_utm"] = np.nan
+d["y_utm"] = np.nan
+with tqdm(total=len(d)) as pbar:
+    for i, row in d.iterrows():
+        d.at[i, 'x_utm'], d.at[i, 'y_utm'] = cvt_pos(getattr(row, 'x_pix'), getattr(row, 'y_pix'), hom1)  # pixel to utm
+d.x_utm = d.x_utm.round(3)
+d.y_utm = d.y_utm.round(3)
+d.to_csv(path_or_buf = file_dir, index=False)
