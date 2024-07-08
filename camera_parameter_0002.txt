@@ -1,6 +1,0 @@
-Camera UTM position: 
-300160.3899145657
-4767856.880266083
-25.975132631137967
-Rotation angles (Radians) for X, Y, Z: [-2.53774035 -0.44840375 -2.77554892] 
-Rotation angles (Degrees) for X, Y, Z: [-145.40181154  -25.69164251 -159.02723881] 
