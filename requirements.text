@@ -1,0 +1,5 @@
+numpy==1.26.4
+pytz==2024.1
+opencv-python==4.7.0.72
+ultralytics==8.2.50
+utm==0.7.0
