@@ -1,6 +1,7 @@
 # Simplified Trajectory Tracking Project
 
-This project is a simplified version of Project A. When you have data captured from fixed cameras, this project allows you to obtain trajectories in the world coordinate system.
+This project is a simplified version of Project A. When you have data captured from fixed cameras, this project allows you to obtain trajectories in the world coordinate system. Yolov8 is required in this project.
+
 
 ## Steps to Follow
 
@@ -33,20 +34,13 @@ Restores labeled data onto the original images for visualization. **(Optional)**
 ### Step9: Combine Images into a Video
 Combines all the labeled images into a single MP4 file. **(Optional)**
 
+
 ## For UAV or Moving Camera Data
 
 If you are using data captured from UAVs or other moving cameras, it is recommended to use a more complex repository. You can find Project A at the following link:
 
-[ANL_ParkSt_trj_data_processing](<(https://github.com/Keke-Long/ANL_ParkSt_trj_data_processing)>)
+[ANL_ParkSt_trj_data_processing](https://github.com/Keke-Long/ANL_ParkSt_trj_data_processing)
 
 
-## Note
-
-- Yolov8 is used.
-
-## How to Run
-
-1. Follow the steps in the scripts sequentially from Step1 to Step9.
-2. Skip Step4 and Step789 if you only need the trajectory CSV data.
 
 
