@@ -1,4 +1,4 @@
-# Simplified Trajectory Tracking Project
+# Vehicle Trajectory Tracking
 
 This project is a simplified version of Project A. When you have data captured from fixed cameras, this project allows you to obtain trajectories in the world coordinate system. Yolov8 is required in this project.
 
