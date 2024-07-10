@@ -37,7 +37,7 @@ Combines all the labeled images into a single MP4 file. **(Optional)**
 
 ## For UAV or Moving Camera Data
 
-If you are using data captured from UAVs or other moving cameras, it is recommended to use a more complex repository: [ANL_ParkSt_trj_data_processing](https://github.com/Keke-Long/ANL_ParkSt_trj_data_processing)
+If you are using data captured from UAVs or other moving cameras, it is recommended to use a more complex repository: [Filed-data-Corridor-Vehicle-Trajectory-Tracking](https://github.com/CATS-Lab/ANL2-Perception-TrajectoryDetection).
 
 
 
